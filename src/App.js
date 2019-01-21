@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import RoomList from './components/RoomList';
+import RoomList from './components/RoomList.js';
+import MessageList from './components/MessageList.js';
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -14,10 +15,56 @@ import * as firebase from 'firebase';
   firebase.initializeApp(config);
 
 class App extends Component {
+  constructor(props){
+    super(props);
+
+    this.roomsRef = firebase.database().ref('rooms');
+
+    this.state = {
+      active: false,
+      rooms: [],
+      roomName: '',
+    };
+    }
+
+    setActive(e){
+      this.setState({active: e.key});
+      this.roomTitle(e.key);
+    }
+
+    roomTitle(key){
+      const activeRoomID = key;
+      const activeRoom = this.state.rooms.filter(room => room.key === activeRoomID);
+      this.setState({roomName: activeRoom[0].name});
+    }
+
+    componentDidMount(){
+      this.roomsRef.on('child_added', snapshot => {
+        const room = snapshot.val();
+        room.key = snapshot.key;
+        this.setState({
+          rooms: this.state.rooms.concat(room)
+        });
+      });
+    };
+
+  
+
   render() {
     return (
       <div className="App">
-        <RoomList firebase = {firebase} />
+        <RoomList
+          firebase = {firebase}
+          active = {this.state.active}
+          setActive = {(e) => this.setActive(e)}
+
+        />
+        <MessageList
+          firebase = {firebase}
+          active = {this.state.active}
+          roomName = {this.state.roomName}
+
+         />
       </div>
     );
   }
