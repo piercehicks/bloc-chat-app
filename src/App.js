@@ -20,6 +20,7 @@ class App extends Component {
     super(props);
 
     this.roomsRef = firebase.database().ref('rooms');
+  
 
     this.state = {
       active: false,
@@ -58,7 +59,7 @@ class App extends Component {
           firebase = {firebase}
           active = {this.state.active}
           roomName = {this.state.roomName}
-          
+
           />
       </div>
     );
