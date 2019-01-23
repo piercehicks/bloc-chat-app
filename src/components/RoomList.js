@@ -6,6 +6,7 @@ class RoomList extends Component {
 
 
    this.roomsRef = this.props.firebase.database().ref('rooms');
+     this.messageRef = this.props.firebase.database().ref('messages');
 
   this.state = {
     rooms: [],
@@ -25,7 +26,8 @@ class RoomList extends Component {
 
    createRoom(newRoom) {
      this.roomsRef.push({
-       name: newRoom
+       name: newRoom,
+
      });
    };
 
@@ -37,30 +39,39 @@ class RoomList extends Component {
      if (!this.state.newRoom) {return}
           this.createRoom(this.state.newRoom);
         }
+        render(){
 
+          return(
+            <div>
+                <h1>Pierce's Bloc Chat</h1>
 
-  render(){
-    const rooms = this.state.rooms.map(key =>
-      <li>{key.name}</li>
-    );
-    return(
-      <div>
-          <h1>Pierce's Bloc Chat</h1>
-        <ul>
-          {rooms}
-        </ul>
-  <section>
-     <form onSubmit={(e) => this.handleSubmit(e)}>
-     <input
-      type="text"
-      value={this.state.newRoom}
-      onChange={(e)=> this.handleChange(e)}
-       />
-     <button>Submit</button>
-     </form>
-</section>
-</div>
-    )
-  }
-}
-export default RoomList;
+              <section>
+              <ul>
+              {
+                      this.state.rooms.map( (room) =>
+                        <li
+                          key={room.key}
+                          onClick={(e) => this.props.setActive(room)}
+                        >
+                          {room.name}
+                        </li>
+                      )
+                    }
+                  </ul>
+
+              </section>
+        <section>
+           <form onSubmit={(e) => this.handleSubmit(e)}>
+           <input
+            type="text"
+            value={this.state.newRoom}
+            onChange={(e)=> this.handleChange(e)}
+             />
+           <button>Click here to add chat room</button>
+           </form>
+      </section>
+      </div>
+          )
+        }
+      }
+      export default RoomList;

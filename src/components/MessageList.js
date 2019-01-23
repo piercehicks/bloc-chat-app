@@ -26,7 +26,7 @@ class MessageList extends Component {
   }
   render(){
     return (
-      <div className="MessageListMain">
+      <div>
         <div>
           <h1>{this.props.roomName}</h1>
         </div>
@@ -36,9 +36,9 @@ class MessageList extends Component {
                 .filter(message => message.roomID === this.props.active)
                 .map((message) =>
                   <div  key={message.key}>
-                    <p>message.username</p>
-                    <p>message.content</p>
-                    <p>message.sentAt</p>
+                    <p>{message.username}</p>
+                    <p>{message.content}</p>
+                    <p>{message.sentAt}</p>
                   </div>
               )
             }
