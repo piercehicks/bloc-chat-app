@@ -20,7 +20,7 @@ class MessageList extends Component {
       messages.key = snapshot.key;
       console.log(messages);
       this.setState({
-        mesages: this.state.messages.concat(messages)
+        messages: this.state.messages.concat(messages)
       });
     });
   }
