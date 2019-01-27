@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
+import User from './components/User';
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -26,6 +27,7 @@ class App extends Component {
       active: false,
       rooms: [],
       roomName: '',
+      user: 'Guest',
     };
   }
 
@@ -47,9 +49,24 @@ class App extends Component {
       this.setState({rooms: this.state.rooms.concat(room)});
     });
   };
+
+  setUser(e){
+    if (e === null){
+      this.setState({user: 'Guest' })}
+      else {
+        this.setState({user: e.displayName})
+      }
+    }
+
+
   render() {
     return (
       <div className="App">
+        <User
+          firebase = {firebase}
+          setUser = {(e) => this.setUser(e)}
+          user = {this.state.user}
+          />
         <RoomList
           firebase = {firebase}
           setActive = {(e) => this.setActive(e)}
