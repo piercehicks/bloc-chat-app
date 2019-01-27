@@ -5,7 +5,7 @@ class User extends Component {
     super(props);
 
     this.setState = {
-      
+      signIn: false,
     }
 
   }
