@@ -33,10 +33,12 @@ class RoomList extends Component {
    };
 
    handleChange(e) {
+     e.preventDefault();
      this.setState({ newRoom: e.target.value });
    }
 
    handleSubmit(e) {
+     e.preventDefault();
      if (!this.state.newRoom) {return}
           this.createRoom(this.state.newRoom);
         }

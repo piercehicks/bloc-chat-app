@@ -13,6 +13,7 @@ class MessageList extends Component {
   }
 
   handleChange(e){
+    e.preventDefault();
     this.setState({newMessageContent: e.target.value});
   }
 
